@@ -1,0 +1,5 @@
+*.zip
+*.rds
+core*
+GO_BP_sim.rds
+all_bp_sim.rds
