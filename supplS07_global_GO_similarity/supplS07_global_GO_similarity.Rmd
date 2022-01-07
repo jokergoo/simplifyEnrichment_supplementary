@@ -1,0 +1,201 @@
+---
+title: "Supplementary file S07. Global GO term similarity"
+author: "Zuguang Gu (z.gu@dkfz.de)"
+date: '`r Sys.Date()`'
+---
+
+```{r, echo = FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+    error = FALSE,
+    tidy  = FALSE,
+    message = FALSE,
+    warning = FALSE,
+    fig.align = "center"
+)
+options(width = 100)
+```
+
+```{r}
+library(simplifyEnrichment)
+se_opt$verbose = FALSE
+```
+
+In this supplementary, we look at the global GO term similarities for Biological Process (BP) ontology.
+First we calculate the similarity matrix for all GO BP terms supported in _GOSemSim_ package.
+
+```{r, eval = !file.exists("all_bp_sim.rds")}
+library(GOSemSim)
+semData = godata("org.Hs.eg.db", ont = "BP")
+ic = semData@IC
+
+library(simplifyEnrichment)
+# This takes very long time
+sm = GO_similarity(names(ic), measure = "Rel", ont = "BP")
+```
+
+
+```{r, eval = !file.exists("all_bp_sim.rds"), echo = FALSE}
+saveRDS(sm, file = "all_bp_sim.rds")
+```
+
+```{r, echo = FALSE, eval = file.exists("all_bp_sim.rds")}
+sm = readRDS("all_bp_sim.rds")
+```
+
+The number of all GO terms in BP ontology:
+
+```{r}
+dim(sm)
+```
+
+## GO BP terms can be clustered into several major groups
+
+To simplify the similarity matrix, the GO terms which have zero similarity to all other terms are removed.
+
+```{r}
+sm_tmp = sm
+diag(sm_tmp) = 1
+l = rowSums(sm_tmp > 0) > 1
+sm = sm[l, l]
+rm(sm_tmp)
+```
+
+Next we construct the GO tree. The parent-children information is from _GO.db_ package. The
+`GOBPCHILDREN` data object contains lists of direct children terms for every GO terms. If a GO term
+is a leaf in the GO tree, the value for it is `NA`.
+
+```{r}
+library(GO.db)
+lt = as.list(GOBPCHILDREN)
+lt[1:5]
+```
+
+Then we can construct a graph object for the GO tree.
+
+```{r}
+df = do.call("rbind", lapply(names(lt), function(nm) {
+	data.frame(rep(nm, length(lt[[nm]])), lt[[nm]])
+}))
+df2 = df[!is.na(df[, 2]), ]
+
+library(igraph)
+g = graph.edgelist(as.matrix(df2), directed = TRUE)
+g
+```
+
+We take the common GO terms in the GO tree and the global similarity matrix.
+
+```{r}
+cn = intersect(rownames(sm), unlist(df2))
+sm2 = sm[cn, cn]
+g = induced_subgraph(g, cn)
+sm2 = sm2[V(g)$name, V(g)$name]
+```
+
+The final number of GO terms are:
+
+```{r}
+dim(sm2)
+```
+
+The gobal similarity matrix is clustered by the "louvain" method. Note binary cut is too slow
+to work on a similarity matrix with 15k GO terms.
+
+```{r, eval = !file.exists("all_bp_sim_cl.rds")}
+# This takes around 30 min
+cl = cluster_terms(sm2, method = "louvain")
+```
+
+```{r, echo = FALSE, eval = !file.exists("all_bp_sim_cl.rds")}
+saveRDS(cl, file = "all_bp_sim_cl.rds")
+```
+
+```{r, echo = FALSE, eval = file.exists("all_bp_sim_cl.rds")}
+cl = readRDS("all_bp_sim_cl.rds")
+```
+
+The size of clusters:
+
+```{r}
+table(cl)
+```
+
+To visualize the similarity matrix and the clustering, we only randomly sample 2000 terms.
+
+```{r, fig.width = 8, fig.height = 4}
+set.seed(123)
+ind = sample(length(cl), 2000)
+ht_clusters(sm2[ind, ind], cl = cl[ind], exclude_words = c("process", "regulation", "response"))
+```
+
+## GO clusters are dominated by several top GO terms
+
+Next we look at what are the top GO terms in each cluster (_i.e._, the GO terms located
+on the top of the GO subtree in each cluster). First we construct subgraph for each cluster.
+
+```{r}
+gl = tapply(rownames(sm2), cl, function(go_id) {
+    induced_subgraph(g, go_id)
+})
+```
+
+Since the subgraphs are split from the global tree/graph, they might have several disconnected compoments.
+We check the sizes of disconnected components in each subgraph.
+
+```{r}
+lapply(gl, function(g) {
+    table(components(g)$membership)
+})
+```
+
+As we can see, in each cluster, there is always a huge components which have majority of the terms while
+other components have very few terms. Thus, we only take the componets with the largest number of terms.
+
+```{r}
+gl2 = lapply(gl, function(g) {
+    membership = components(g)$membership
+    induced_subgraph(g, membership == which.max(table(membership)))
+})
+```
+
+Next we extract the top GO terms where the in-degree is zero. And we only want the GO terms
+which are the parent nodes of a huge GO subtree. The influences a parent node gives to all its 
+descendant nodes is measured by the ["spread centrality"](https://rdrr.io/github/jokergoo/CePa/man/spread.html).
+
+```{r}
+library(CePa)
+lapply(gl2, function(g) {
+    s1 = degree(g, mode = "in")
+    s2 = spread(g, mode = "out")
+    s2[s1 == 0]
+})
+```
+
+As shown above, in each cluster, there are some top GO terms that are only the
+parents of a small number of children terms while some other terms have extremely 
+high spread values which means they are parents of huge number of children terms.
+We simply remove the top GO terms with spread values less than the mean spread values
+of all top GO terms.
+
+```{r, echo = FALSE}
+options(width = 40)
+```
+
+```{r}
+go_list = lapply(gl2, function(g) {
+    s1 = degree(g, mode = "in")
+    s2 = spread(g, mode = "out")
+    go_id = V(g)$name[which(s1 == 0)]
+    s = s2[s1 == 0]
+    go_id = go_id[s >= mean(s)]
+    term = suppressMessages(select(GO.db::GO.db, keys = go_id, columns = "TERM")$TERM)
+    paste0(go_id, ": ", term)
+})
+```
+
+The final major top GO terms in each cluster are:
+
+```{r}
+go_list
+```

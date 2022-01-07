@@ -1,0 +1,103 @@
+---
+title: "Supplementary file S12. Select cutoff in binary cut clustering"
+author: "Zuguang Gu (z.gu@dkfz.de)"
+date: '`r Sys.Date()`'
+---
+
+
+```{r, echo = FALSE}
+library(knitr)
+knitr::opts_chunk$set(
+    error = FALSE,
+    tidy  = FALSE,
+    message = FALSE,
+    warning = FALSE,
+    fig.align = "center",
+    fig.width = 5, 
+    fig.height = 4
+)
+options(width = 100)
+```
+
+In every step of binary cut clustering, a score is calculated based on the
+two-group partitioning and it is compared against a cutoff to decide whether
+the current matrix is treated as a single group or should be split more. In
+this document, we demonstrate how to fine-tune the cutoff to get nicer
+clusterings.
+
+```{r}
+library(simplifyEnrichment)
+library(grid)
+```
+
+The default cutoff is 0.85, it works well if the diagonal pattern is obvious from the heatmap.
+
+
+```{r}
+rl = readRDS("clt_random_BP_11.rds")
+mat = rl[[1]]
+cl = binary_cut(mat)
+ht_clusters(mat, cl, draw_word_cloud = FALSE)
+```
+
+Multiple cutoff can be tried by `select_cutoff()` function. The function applies binary cut clustering with every cutoff
+and calculates the difference score, the number of clusters and the block mean values for each clustering. Finally it produces
+a plot with the three metrics against different cutoff values.
+
+In the following plot, basically a cutoff in the interval [0.78, 0.98] generates almost the same clusterings, and with cutoff 
+lower than 0.77, the clusterings lead to more groups, which decreases the difference scores and increase the block mean values.
+
+
+```{r, fig.height = 5}
+select_cutoff(mat, verbose = FALSE)
+```
+
+Next we show two clusterings with cutoff of 0.8 and 0.7 separately. When cutoff is set to 0.8, the clustering visually is the same as the heatmap we showed in the beginning of this document (where the cutoff is 0.85), and when cutoff is set to 0.7, some clusters are
+split into more sub-clusters.
+
+For this case, we would say a cutoff of 0.8 is better than 0.7, as it generates higher difference score and the heatmap look cleaner.
+
+
+```{r, fig.width = 8}
+cl = binary_cut(mat, cutoff = 0.8)
+p1 = grid.grabExpr(ht_clusters(mat, cl, draw_word_cloud = FALSE, column_title = "cutoff = 0.8",
+	show_heatmap_legend = FALSE))
+
+cl = binary_cut(mat, cutoff = 0.7)
+p2 = grid.grabExpr(ht_clusters(mat, cl, draw_word_cloud = FALSE, column_title = "cutoff = 0.7",
+	show_heatmap_legend = FALSE))
+grid.newpage()
+pushViewport(viewport(x = 0.25, width = 0.5))
+grid.draw(p1)
+popViewport()
+pushViewport(viewport(x = 0.75, width = 0.5))
+grid.draw(p2)
+popViewport()
+```
+
+There are some other scenarios where the cutoff needs to manually adjusted. The following example is based on one dataset
+from EBI Expression Atlas cohort, taking Disease Ontology as the gene sets. The heatmap below is based on the default cutoff of 0.85.
+
+```{r}
+rl = readRDS("clt_E-GEOD-101794_g2_g1_DO.rds")
+mat = rl[[1]]
+cl = binary_cut(mat)
+ht_clusters(mat, cl, draw_word_cloud = FALSE)
+```
+
+This is a very typical case where in the big clusters also exist multiple
+dense and small clusters. In this case, the cutoff can be fine-tuned according
+to what levels of similarities users want to keep.
+
+If we run `select_cutoff()`, actually we can see the cutoff can lead to two different clusterings (cutoff in [0.85, 0.98] and in [0.7, 0.84]).
+
+```{r, fig.height = 5}
+select_cutoff(mat, verbose = FALSE)
+```
+
+And if we set the cutof to some value lower than 0.85, the small dense clusters will be captured.
+
+```{r}
+cl = binary_cut(mat, cutoff = 0.8)
+ht_clusters(mat, cl, draw_word_cloud = FALSE, column_title = "cutoff = 0.8")
+```

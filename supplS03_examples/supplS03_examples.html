@@ -1,0 +1,289 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Supplementary file S03. Examples of simplifyEnrichment</title>
+<style>
+	body, td, th {
+   font-family: sans-serif;
+   background-color: white;
+   font-size: 13px;
+}
+
+body {
+  margin: auto;
+  width: 90%;
+  padding: 1em;
+  line-height: 20px;
+}
+
+tt, code, pre {
+   font-family: 'DejaVu Sans Mono', 'Droid Sans Mono', 'Lucida Console', Consolas, Monaco, monospace;
+}
+
+h1 {
+   font-size:2.2em;
+}
+
+h2 {
+   font-size:1.8em;
+}
+
+h3 {
+   font-size:1.4em;
+}
+
+h4 {
+   font-size:1.0em;
+}
+
+h5 {
+   font-size:0.9em;
+}
+
+h6 {
+   font-size:0.8em;
+}
+
+a:visited {
+   color: rgb(50%, 0%, 50%);
+}
+
+pre, img {
+  max-width: 100%;
+}
+pre {
+  overflow-x: auto;
+}
+pre code {
+   display: block; padding: 0.5em;
+}
+
+code {
+  font-size: 92%;
+  border: 1px solid #ccc;
+}
+
+code[class] {
+  background-color: #F8F8F8;
+}
+
+table {
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+}
+
+td, th {
+	padding: 2px 8px;
+}
+
+blockquote {
+   color:#666666;
+   margin:0;
+   padding-left: 1em;
+   border-left: 0.5em #EEE solid;
+}
+
+hr {
+   height: 0px;
+   border-bottom: none;
+   border-top-width: thin;
+   border-top-style: dotted;
+   border-top-color: #999999;
+}
+
+@media print {
+   * {
+      background: transparent !important;
+      color: black !important;
+      filter:none !important;
+      -ms-filter: none !important;
+   }
+
+   body {
+      font-size:12pt;
+      max-width:100%;
+   }
+
+   a, a:visited {
+      text-decoration: underline;
+   }
+
+   hr {
+      visibility: hidden;
+      page-break-before: always;
+   }
+
+   pre, blockquote {
+      padding-right: 1em;
+      page-break-inside: avoid;
+   }
+
+   tr, img {
+      page-break-inside: avoid;
+   }
+
+   img {
+      max-width: 100% !important;
+   }
+
+   @page :left {
+      margin: 15mm 20mm 15mm 10mm;
+   }
+
+   @page :right {
+      margin: 15mm 10mm 15mm 20mm;
+   }
+
+   p, h2, h3 {
+      orphans: 3; widows: 3;
+   }
+
+   h2, h3 {
+      page-break-after: avoid;
+   }
+}
+</style>
+
+</head>
+
+<body>
+<h1>Supplementary file 4. Examples of simplifyEnrichment</h1>
+
+<p>This page contains results for functional enrichment clustering done by the <a href="https://github.com/jokergoo/simplifyEnrichment/"><strong>simplifyEnrichment</strong></a> package.</p>
+
+<hr/>
+
+<h2>Random GO</h2>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/random_BP.html">random_BP</a> (Based on semantic similarity matrix)</li>
+<li><a href="https://simplifyenrichment.github.io/examples/random_CC.html">random_CC</a> (Based on semantic similarity matrix)</li>
+<li><a href="https://simplifyenrichment.github.io/examples/random_MF.html">random_MF</a> (Based on semantic similarity matrix)</li>
+<li><a href="https://simplifyenrichment.github.io/examples/random_BP_dice.html">random_BP_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/random_BP_jaccard.html">random_BP_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/random_BP_kappa.html">random_BP_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/random_BP_overlap.html">random_BP_overlap</a></li>
+</ul>
+
+<hr/>
+
+<h2>On EBI Expression Atlas datasets</h2>
+
+<h3>GO</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_GO_BP.html">EBI_Expression_Atlas_GO_BP</a> (Based on semantic similarity matrix)</li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_GO_BP_dice.html">EBI_Expression_Atlas_GO_BP_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_GO_BP_jaccard.html">EBI_Expression_Atlas_GO_BP_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_GO_BP_kappa.html">EBI_Expression_Atlas_GO_BP_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_GO_BP_overlap.html">EBI_Expression_Atlas_GO_BP_overlap</a></li>
+</ul>
+
+<h3>DO</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_DO.html">EBI_Expression_Atlas_DO</a> (Based on semantic similarity matrix)</li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_DO_dice.html">EBI_Expression_Atlas_DO_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_DO_jaccard.html">EBI_Expression_Atlas_DO_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_DO_kappa.html">EBI_Expression_Atlas_DO_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_DO_overlap.html">EBI_Expression_Atlas_DO_overlap</a></li>
+</ul>
+
+<h3>KEGG</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_KEGG_dice.html">EBI_Expression_Atlas_KEGG_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_KEGG_jaccard.html">EBI_Expression_Atlas_KEGG_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_KEGG_kappa.html">EBI_Expression_Atlas_KEGG_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_KEGG_overlap.html">EBI_Expression_Atlas_KEGG_overlap</a></li>
+</ul>
+
+<h3>Reactome</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_Reactome_dice.html">EBI_Expression_Atlas_Reactome_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_Reactome_jaccard.html">EBI_Expression_Atlas_Reactome_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_Reactome_kappa.html">EBI_Expression_Atlas_Reactome_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_Reactome_overlap.html">EBI_Expression_Atlas_Reactome_overlap</a></li>
+</ul>
+
+<h3>MsigDB_C2_CGP</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C2_CGP_dice.html">EBI_Expression_Atlas_MsigDB_C2_CGP_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C2_CGP_jaccard.html">EBI_Expression_Atlas_MsigDB_C2_CGP_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C2_CGP_kappa.html">EBI_Expression_Atlas_MsigDB_C2_CGP_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C2_CGP_overlap.html">EBI_Expression_Atlas_MsigDB_C2_CGP_overlap</a></li>
+</ul>
+
+<h3>MsigDB_C3_GTRD</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_GTRD_dice.html">EBI_Expression_Atlas_MsigDB_C3_GTRD_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_GTRD_jaccard.html">EBI_Expression_Atlas_MsigDB_C3_GTRD_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_GTRD_kappa.html">EBI_Expression_Atlas_MsigDB_C3_GTRD_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_GTRD_overlap.html">EBI_Expression_Atlas_MsigDB_C3_GTRD_overlap</a></li>
+</ul>
+
+<h3>MsigDB_C3_MIR_Legacy</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_MIR_Legacy_dice.html">EBI_Expression_Atlas_MsigDB_C3_MIR_Legacy_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_MIR_Legacy_jaccard.html">EBI_Expression_Atlas_MsigDB_C3_MIR_Legacy_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_MIR_Legacy_kappa.html">EBI_Expression_Atlas_MsigDB_C3_MIR_Legacy_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_MIR_Legacy_overlap.html">EBI_Expression_Atlas_MsigDB_C3_MIR_Legacy_overlap</a></li>
+</ul>
+
+<h3>MsigDB_C3_MIRDB</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_MIRDB_dice.html">EBI_Expression_Atlas_MsigDB_C3_MIRDB_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_MIRDB_jaccard.html">EBI_Expression_Atlas_MsigDB_C3_MIRDB_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_MIRDB_kappa.html">EBI_Expression_Atlas_MsigDB_C3_MIRDB_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_MIRDB_overlap.html">EBI_Expression_Atlas_MsigDB_C3_MIRDB_overlap</a></li>
+</ul>
+
+<h3>MsigDB_C3_TFT_Legacy</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_TFT_Legacy_dice.html">EBI_Expression_Atlas_MsigDB_C3_TFT_Legacy_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_TFT_Legacy_jaccard.html">EBI_Expression_Atlas_MsigDB_C3_TFT_Legacy_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_TFT_Legacy_kappa.html">EBI_Expression_Atlas_MsigDB_C3_TFT_Legacy_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C3_TFT_Legacy_overlap.html">EBI_Expression_Atlas_MsigDB_C3_TFT_Legacy_overlap</a></li>
+</ul>
+
+<h3>MsigDB_C4_CGN</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C4_CGN_dice.html">EBI_Expression_Atlas_MsigDB_C4_CGN_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C4_CGN_jaccard.html">EBI_Expression_Atlas_MsigDB_C4_CGN_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C4_CGN_kappa.html">EBI_Expression_Atlas_MsigDB_C4_CGN_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C4_CGN_overlap.html">EBI_Expression_Atlas_MsigDB_C4_CGN_overlap</a></li>
+</ul>
+
+<h3>MsigDB_C4_CM</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C4_CM_dice.html">EBI_Expression_Atlas_MsigDB_C4_CM_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C4_CM_jaccard.html">EBI_Expression_Atlas_MsigDB_C4_CM_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C4_CM_kappa.html">EBI_Expression_Atlas_MsigDB_C4_CM_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C4_CM_overlap.html">EBI_Expression_Atlas_MsigDB_C4_CM_overlap</a></li>
+</ul>
+
+<h3>MsigDB_C7_IMMUNESIGDB</h3>
+
+<ul>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C7_IMMUNESIGDB_dice.html">EBI_Expression_Atlas_MsigDB_C7_IMMUNESIGDB_dice</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C7_IMMUNESIGDB_jaccard.html">EBI_Expression_Atlas_MsigDB_C7_IMMUNESIGDB_jaccard</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C7_IMMUNESIGDB_kappa.html">EBI_Expression_Atlas_MsigDB_C7_IMMUNESIGDB_kappa</a></li>
+<li><a href="https://simplifyenrichment.github.io/examples/EBI_Expression_Atlas_MsigDB_C7_IMMUNESIGDB_overlap.html">EBI_Expression_Atlas_MsigDB_C7_IMMUNESIGDB_overlap</a></li>
+</ul>
+
+</body>
+
+</html>
+

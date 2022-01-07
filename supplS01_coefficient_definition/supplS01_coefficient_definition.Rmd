@@ -1,0 +1,77 @@
+---
+title: "Supplementary file S01. Definition of gene overlap coefficients"
+author: "Zuguang Gu (z.gu@dkfz.de)"
+date: '`r Sys.Date()`'
+---
+
+In this supplementary, we give a brief introduction of following coefficients that measure
+the similarity between two gene sets based on gene overlaps: [Jaccard coefficient](https://en.wikipedia.org/wiki/Jaccard_index), [Dice coefficient](https://en.wikipedia.org/wiki/S%C3%B8rensen%E2%80%93Dice_coefficient), [overlap coefficient](https://en.wikipedia.org/wiki/Overlap_coefficient) and [kappa coefficient](https://en.wikipedia.org/wiki/Cohen%27s_kappa).
+
+
+Denote two sets of genes as $A$ and $B$, the
+Jaccard coeffcient between the two sets is calculated as:
+
+$${|A \cap B|}\over{|A \cup B|}$$
+
+The Dice coeffcient is calculated as:
+
+$$\frac{|A \cap B|}{(|A| + |B|)/2}$$
+
+Jaccard coefficient has a relationship with Dice coefficient in the form of:
+
+$$Jaccard = \frac{Dice}{2 - Dice}$$
+
+The overlap coeffcient is calculated as:
+
+$$\frac{| A \cap B | }{\min(|A|,|B|)}$$
+
+The symbol $|A|$ means the size of set $A$ (number of elements).
+
+The definition of kappa coeffient is a little bit complex. First let's format the two sets
+into a contigency table:
+
+<style>
+table {
+  border-collapse: collapse;
+}
+table, th, td {
+  border: 1px solid black;
+}
+th, td {
+	padding: 2px 5px;
+}
+.symbol {
+	font-family: Times;
+	font-style: italic;
+}
+</style>
+<center>
+<table>
+	<tr><td rowspan='2' colspan='2'></td><td colspan='2'>In set <b>B</b></td></tr>
+	<tr><td>Yes</td><td>No</td></tr>
+	<tr><td rowspan='2'>In set <b>A</b></td><td>Yes</td><td class="symbol">a</td><td class="symbol">b</td></tr>
+	<tr><td>No</td><td class="symbol">c</td><td class="symbol">d</td></tr>
+</table>
+</center>
+
+where $a$, $b$, $c$, $d$ are the numbers of genes that fall in each category.
+
+Let's calculate $p_o$ and $p_e$ as: 
+
+$$p_o = \frac{a+d}{a+b+c+d}$$
+
+$$p_{Yes} = \frac{a+b}{a+b+c+d} \cdot \frac{a+c}{a+b+c+d}$$
+
+$$p_{No} = \frac{c+d}{a+b+c+d} \cdot \frac{b+d}{a+b+c+d}$$
+
+$$p_e = p_{Yes} + p_{No}$$
+
+where $p_o$ is the probability of a gene in both gene sets or neither in the two sets,
+$p_{Yes}$ is the probability of a gene in both gene sets by random (by assuming the events of a gene in set $A$ and set $B$ are independent), $p_{No}$ is the probability of a gene
+not in the two sets by random, and $p_e$ is the probability of a gene either both in 
+the two sets or not in the two sets by random.
+
+and the kappa coeffcient is calculated as:
+
+$$\frac{p_o - p_e}{1 - p_e}$$
+
